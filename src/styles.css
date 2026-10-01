@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0c0c0c;
+  --color-fg: #f3f3f0;
+  --color-muted: #8c8c86;
+  --color-faint: #5c5c56;
+  --color-line: rgba(243, 243, 240, 0.12);
+  --color-line-strong: rgba(243, 243, 240, 0.22);
+  --color-elevated: #141414;
+  --color-hot: #d45bb6;
+  --color-hot-fg: #1a1016;
+  --color-ok: #8fca7a;
+  --color-bad: #e06a5e;
+  --color-warn: #d4b05a;
+  --color-cyan: #7ecad4;
+
+  --font-sans: "Fragment Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.125rem;
+  --text-xl: clamp(1.35rem, 1rem + 1.2vw, 1.75rem);
+  --text-2xl: clamp(1.75rem, 1.1rem + 2.2vw, 2.75rem);
+  --text-3xl: clamp(2.2rem, 1.2rem + 4vw, 4.25rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-quick: 150ms;
+  --motion-fast: 250ms;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-fg);
+    overflow-x: hidden;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-hot);
+    color: var(--color-hot-fg);
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* Typesafe-like page grid */
+.site-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-fg) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-fg) 6%, transparent) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center top;
+}
+
+.site-grid::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.term-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.term-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-fg) 18%, transparent);
+}
+.term-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 7px;
+  height: 1em;
+  background: var(--color-fg);
+  transform: translateY(2px);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+@keyframes sweep {
+  from {
+    transform: translateX(-20%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+.scan-sweep {
+  animation: sweep 3.6s linear infinite;
+}
+
+@keyframes kev-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.kev-ticker {
+  display: inline-block;
+  min-width: 100%;
+  padding-inline: 1rem;
+  animation: kev-ticker 48s linear infinite;
+  will-change: transform;
+}
+
+@keyframes kev-live {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.28;
+  }
+}
+
+.kev-live {
+  animation: kev-live 1.8s ease-in-out infinite;
+}
